@@ -1,9 +1,14 @@
+import Button from './components/Elements/Button';
+import LoginPage from './components/Pages/LoginPage';
+import RegisterPage from './components/Pages/RegisterPage';
+
 function App() {
     return (
         <>
-            <h1 className='text-3xl text-blue-500 font-semibold'>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo, aperiam?
-            </h1>
+            <div className='flex items-center justify-center min-h-screen'>
+                {/* <LoginPage /> */}
+                <RegisterPage />
+            </div>
         </>
     );
 }
