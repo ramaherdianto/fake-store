@@ -7,8 +7,8 @@ const InputForm = (props) => {
 
     return (
         <>
-            <Label htmlfor={name}>{label}</Label>
-            <Input name={name} type={type} placeholder={placeholder} />
+            <Label htmlFor={name}>{label}</Label>
+            <Input name={name} type={type} placeholder={placeholder} id={name} />
         </>
     );
 };
