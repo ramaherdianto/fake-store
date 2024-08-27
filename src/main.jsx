@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import RegisterPage from './components/Pages/register.jsx';
 import LoginPage from './components/Pages/login.jsx';
 import ErrorPage from './components/Pages/error404.jsx';
@@ -9,7 +9,7 @@ import ErrorPage from './components/Pages/error404.jsx';
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <div>Hello Error</div>,
+        element: <Link to='/register'>Hello React</Link>,
         errorElement: <ErrorPage />,
     },
     {

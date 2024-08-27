@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AuthLayouts = (props) => {
-    const { title, children } = props;
+    const { title, children, type } = props;
 
     return (
         <div className='min-h-screen flex justify-center items-center'>
@@ -11,6 +12,15 @@ const AuthLayouts = (props) => {
                     Welcome, Please enter your details
                 </p>
                 {children}
+                <p className='mt-5 text-sm text-center'>
+                    {type === 'login' ? `Don't have an account?` : 'Have an account?'}{' '}
+                    <Link
+                        to={type === 'login' ? '/register' : '/login'}
+                        className='text-blue-500 font-bold'
+                    >
+                        {type === 'login' ? 'Sign Up' : 'Sign In'}
+                    </Link>{' '}
+                </p>
             </div>
         </div>
     );
