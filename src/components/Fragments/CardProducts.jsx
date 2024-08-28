@@ -5,7 +5,7 @@ const CardProducts = (props) => {
     const { children } = props;
 
     return (
-        <article className='w-full max-w-sm bg-slate-800 border border-slate-700 rounded-lg shadow p-8 mx-2 flex flex-col justify-between'>
+        <article className='w-full max-w-xs bg-slate-800 border border-slate-700 rounded-lg shadow p-4 m-2 flex flex-col justify-between'>
             {children}
         </article>
     );
@@ -16,7 +16,11 @@ const Header = (props) => {
 
     return (
         <a className=''>
-            <img src={image} alt='Product' className='rounded-lg' />
+            <img
+                src={image}
+                alt='Product'
+                className='rounded-lg object-cover object-center aspect-square'
+            />
         </a>
     );
 };
@@ -35,12 +39,16 @@ const Body = (props) => {
 };
 
 const Footer = (props) => {
-    const { price } = props;
+    const { price, handleAddCart, id } = props;
 
     return (
         <div className='flex justify-between items-center'>
-            <span className='text-xl font-bold text-white'>{price}</span>
-            <Button className='bg-blue-500'>Add to Cart</Button>
+            <span className='text-md font-bold text-white'>
+                Rp. {price.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}
+            </span>
+            <Button className='bg-blue-500' type='button' onClick={() => handleAddCart(id)}>
+                Add to Cart
+            </Button>
         </div>
     );
 };
