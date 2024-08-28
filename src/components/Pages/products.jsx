@@ -1,5 +1,6 @@
 import React from 'react';
 import CardProducts from '../Fragments/CardProducts';
+import Button from '../Elements/Button';
 
 const products = [
     {
@@ -30,20 +31,37 @@ const products = [
 ];
 
 const ProductsPage = () => {
+    const email = localStorage.getItem('email');
+
+    const handleLogout = (event) => {
+        event.preventDefault();
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
+        window.location.href = '/login';
+    };
+
     return (
-        <section className='flex justify-center py-5'>
-            {products.map((product) => {
-                return (
-                    <CardProducts key={product.id}>
-                        <CardProducts.Header image={product.image} />
-                        <CardProducts.Body name={product.name}>
-                            {product.description}
-                        </CardProducts.Body>
-                        <CardProducts.Footer price={product.price} />
-                    </CardProducts>
-                );
-            })}
-        </section>
+        <>
+            <nav className='p-5 bg-blue-500 flex items-center justify-end gap-8'>
+                <h1 className='text-white font-bold'>{email}</h1>
+                <Button onClick={handleLogout} className='bg-slate-800'>
+                    Logout
+                </Button>
+            </nav>
+            <section className='flex justify-center py-5'>
+                {products.map((product) => {
+                    return (
+                        <CardProducts key={product.id}>
+                            <CardProducts.Header image={product.image} />
+                            <CardProducts.Body name={product.name}>
+                                {product.description}
+                            </CardProducts.Body>
+                            <CardProducts.Footer price={product.price} />
+                        </CardProducts>
+                    );
+                })}
+            </section>
+        </>
     );
 };
 
