@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CardProducts from '../Fragments/CardProducts';
 import Button from '../Elements/Button';
 
@@ -67,6 +67,16 @@ const ProductsPage = () => {
         }
     }, [cart]);
 
+    const totalPriceRef = useRef(null);
+
+    useEffect(() => {
+        if (cart.length > 0) {
+            totalPriceRef.current.style.display = 'table-row';
+        } else {
+            totalPriceRef.current.style.display = 'none';
+        }
+    }, [cart]);
+
     return (
         <>
             <nav className='p-5 bg-blue-500 flex items-center justify-end gap-8'>
@@ -130,7 +140,7 @@ const ProductsPage = () => {
                                     </tr>
                                 );
                             })}
-                            <tr>
+                            <tr ref={totalPriceRef}>
                                 <td colSpan={4} className='font-bold'>
                                     Total Price
                                 </td>
