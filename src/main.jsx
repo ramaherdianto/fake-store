@@ -2,10 +2,10 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
-import RegisterPage from './components/Pages/register.jsx';
-import LoginPage from './components/Pages/login.jsx';
-import ErrorPage from './components/Pages/error404.jsx';
-import ProductsPage from './components/Pages/products.jsx';
+import RegisterPage from './Pages/register.jsx';
+import LoginPage from './Pages/login.jsx';
+import ErrorPage from './Pages/error404.jsx';
+import ProductsPage from './Pages/products.jsx';
 
 const router = createBrowserRouter([
     {

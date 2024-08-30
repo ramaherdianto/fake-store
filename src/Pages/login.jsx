@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthLayouts from '../Layouts/AuthLayouts';
-import FormLogin from '../Fragments/FormLogin';
+import AuthLayouts from '../components/Layouts/AuthLayouts';
+import FormLogin from '../components/Fragments/FormLogin';
 
 const LoginPage = () => {
     return (

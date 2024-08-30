@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import InputForm from '../Elements/Input';
 import Button from '../Elements/Button';
 
 const FormRegister = () => {
+    const fullnameRef = useRef(null);
+
+    useEffect(() => {
+        fullnameRef.current.focus();
+    }, []);
+
     return (
         <form action=''>
             <InputForm
+                ref={fullnameRef}
                 type='text'
                 label='Fullname'
                 name='fullname'
