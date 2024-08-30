@@ -5,7 +5,7 @@ const CardProducts = (props) => {
     const { children } = props;
 
     return (
-        <article className='w-full max-w-xs bg-slate-800 border border-slate-700 rounded-lg shadow p-4 m-2 flex flex-col justify-between'>
+        <article className='w-full max-w-xs bg-slate-100 border border-slate-300 rounded-lg shadow p-4 m-2 flex flex-col justify-between'>
             {children}
         </article>
     );
@@ -19,7 +19,7 @@ const Header = (props) => {
             <img
                 src={image}
                 alt='Product'
-                className='rounded-lg object-cover object-center aspect-square'
+                className='rounded-lg h-60 w-full object-cover object-center aspect-square'
             />
         </a>
     );
@@ -31,8 +31,12 @@ const Body = (props) => {
     return (
         <div className='py-5 h-full'>
             <a href=''>
-                <h2 className='text-xl font-semibold tracking-tight text-white'>{name}</h2>
-                <p className='text-sm text-white mt-2'>{children}</p>
+                <h2 className='text-xl font-semibold tracking-tight text-slate-800'>
+                    {name.length >= 20 ? `${name.substring(0, 20)}...` : name}
+                </h2>
+                <p className='text-sm text-slate-500 mt-2'>
+                    {children.length >= 45 ? `${children.substring(0, 45)}...` : children}
+                </p>
             </a>
         </div>
     );
@@ -43,8 +47,8 @@ const Footer = (props) => {
 
     return (
         <div className='flex justify-between items-center'>
-            <span className='text-md font-bold text-white'>
-                Rp. {price.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}
+            <span className='text-md font-bold text-slate-800'>
+                $. {price.toLocaleString('en-EN', { styles: 'currency', currency: 'USD' })}
             </span>
             <Button className='bg-blue-500' type='button' onClick={() => handleAddCart(id)}>
                 Add to Cart

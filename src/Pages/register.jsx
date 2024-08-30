@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthLayouts from '../Layouts/AuthLayouts';
-import FormRegister from '../Fragments/FormRegister';
+import AuthLayouts from '../components/Layouts/AuthLayouts';
+import FormRegister from '../components/Fragments/FormRegister';
 
 const RegisterPage = () => {
     return (
