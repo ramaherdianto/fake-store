@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import CardProducts from '../components/Fragments/CardProducts';
 import Button from '../components/Elements/Button';
 import { getProducts } from '../services/products.services';
+import { getUsername } from '../services/auth.services';
+import { useLogin } from '../hooks/useLogin';
+import { Navbar } from '../components/Fragments/Navbar';
 
 const ProductsPage = () => {
     const email = localStorage.getItem('email');
@@ -16,14 +19,6 @@ const ProductsPage = () => {
         } else {
             setCart([...cart, { id, qty: 1 }]);
         }
-    };
-
-    const handleLogout = (event) => {
-        event.preventDefault();
-        localStorage.removeItem('email');
-        localStorage.removeItem('password');
-        localStorage.removeItem('cart');
-        window.location.href = '/login';
     };
 
     useEffect(() => {
@@ -60,90 +55,90 @@ const ProductsPage = () => {
 
     return (
         <>
-            <nav className='p-5 bg-blue-500 flex items-center justify-end gap-8'>
-                <h1 className='text-white font-bold'>{email}</h1>
-                <Button onClick={handleLogout} className='bg-slate-800'>
-                    Logout
-                </Button>
-            </nav>
+            <Navbar />
             <section className='flex justify-center py-5'>
-                <div className='w-4/6 flex flex-wrap'>
-                    {products.length > 0 &&
-                        products.map((product) => {
-                            return (
-                                <CardProducts key={product.id}>
-                                    <CardProducts.Header image={product.image} />
-                                    <CardProducts.Body name={product.title}>
-                                        {product.description}
-                                    </CardProducts.Body>
-                                    <CardProducts.Footer
-                                        price={product.price}
-                                        handleAddCart={handleAddCart}
-                                        id={product.id}
-                                    />
-                                </CardProducts>
-                            );
-                        })}
-                </div>
-                <div className='w-2/6'>
-                    <h1 className='text-3xl text-blue-500 font-bold px-5'>Cart</h1>
-                    <table className='text-left table-auto border-separate border-spacing-x-5 mt-5'>
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Qty</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.length > 0 &&
-                                cart.map((item) => {
-                                    const product = products.find(
-                                        (product) => product.id === item.id
-                                    );
-                                    return (
-                                        <tr key={product.id}>
-                                            <td>
-                                                {product.title.length >= 30
-                                                    ? `${product.title.substring(0, 30)}...`
-                                                    : product.title}
-                                            </td>
-                                            <td>
-                                                $.{' '}
-                                                {product.price.toLocaleString('en-EN', {
-                                                    styles: 'currency',
-                                                    currency: 'USD',
-                                                })}
-                                            </td>
-                                            <td>{item.qty}</td>
-                                            <td>
-                                                $.{' '}
-                                                {(item.qty * product.price).toLocaleString(
-                                                    'en-EN',
-                                                    {
+                <div className='max-w-7xl w-full flex justify-center'>
+                    <div className='w-4/6 flex flex-wrap'>
+                        {products.length > 0 &&
+                            products.map((product) => {
+                                return (
+                                    <CardProducts key={product.id}>
+                                        <CardProducts.Header
+                                            image={product.image}
+                                            id={product.id}
+                                        />
+                                        <CardProducts.Body name={product.title}>
+                                            {product.description}
+                                        </CardProducts.Body>
+                                        <CardProducts.Footer
+                                            price={product.price}
+                                            handleAddCart={handleAddCart}
+                                            id={product.id}
+                                        />
+                                    </CardProducts>
+                                );
+                            })}
+                    </div>
+                    <div className='w-2/6'>
+                        <h1 className='text-3xl text-blue-500 font-bold px-5'>Cart</h1>
+                        <table className='text-left table-auto border-separate border-spacing-x-5 mt-5'>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {products.length > 0 &&
+                                    cart.map((item) => {
+                                        const product = products.find(
+                                            (product) => product.id === item.id
+                                        );
+                                        return (
+                                            <tr key={product.id}>
+                                                <td>
+                                                    {product.title.length >= 18
+                                                        ? `${product.title.substring(0, 18)}...`
+                                                        : product.title}
+                                                </td>
+                                                <td>
+                                                    $.{' '}
+                                                    {product.price.toLocaleString('en-EN', {
                                                         styles: 'currency',
                                                         currency: 'USD',
-                                                    }
-                                                )}
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            <tr ref={totalPriceRef}>
-                                <td colSpan={3} className='font-bold'>
-                                    Total Price
-                                </td>
-                                <td className='font-bold'>
-                                    $.{' '}
-                                    {totalPrice.toLocaleString('en-EN', {
-                                        styles: 'currency',
-                                        currency: 'USD',
+                                                    })}
+                                                </td>
+                                                <td>{item.qty}</td>
+                                                <td>
+                                                    $.{' '}
+                                                    {(item.qty * product.price).toLocaleString(
+                                                        'en-EN',
+                                                        {
+                                                            styles: 'currency',
+                                                            currency: 'USD',
+                                                        }
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        );
                                     })}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <tr ref={totalPriceRef}>
+                                    <td colSpan={3} className='font-bold'>
+                                        Total Price
+                                    </td>
+                                    <td className='font-bold'>
+                                        $.{' '}
+                                        {totalPrice.toLocaleString('en-EN', {
+                                            styles: 'currency',
+                                            currency: 'USD',
+                                        })}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
         </>

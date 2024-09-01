@@ -6,11 +6,13 @@ import RegisterPage from './Pages/register.jsx';
 import LoginPage from './Pages/login.jsx';
 import ErrorPage from './Pages/error404.jsx';
 import ProductsPage from './Pages/products.jsx';
+import { ProfilePage } from './Pages/profile.jsx';
+import DetailsProductPage from './Pages/detailsProduct.jsx';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Link to='/register'>Hello React</Link>,
+        element: <LoginPage />,
         errorElement: <ErrorPage />,
     },
     {
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
     {
         path: '/products',
         element: <ProductsPage />,
+    },
+    {
+        path: '/profile',
+        element: <ProfilePage />,
+    },
+    {
+        path: '/product/:id',
+        element: <DetailsProductPage />,
     },
 ]);
 

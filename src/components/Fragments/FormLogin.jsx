@@ -1,31 +1,51 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import InputForm from '../Elements/Input';
 import Button from '../Elements/Button';
+import { login } from '../../services/auth.services';
 
 const FormLogin = () => {
-    const emailRef = useRef(null);
+    const usernameRef = useRef(null);
+    const [isLoginFailed, setIsLoginFailed] = useState('');
 
     const handleLogin = (event) => {
         event.preventDefault();
-        localStorage.setItem('email', event.target.email.value);
-        localStorage.setItem('password', event.target.password.value);
-        window.location.href = '/products';
+        const data = {
+            username: event.target.username.value,
+            password: event.target.password.value,
+        };
+
+        if (
+            event.target.username.value.trim() === '' ||
+            event.target.password.value.trim() === ''
+        ) {
+            alert('Please input your username or password!');
+        } else {
+            login(data, (status, res) => {
+                if (status) {
+                    localStorage.setItem('token', res);
+                    window.location.href = '/products';
+                } else {
+                    setIsLoginFailed(res);
+                }
+            });
+        }
     };
 
     useEffect(() => {
-        emailRef.current.focus();
+        usernameRef.current.focus();
     }, []);
 
     return (
         <form onSubmit={handleLogin}>
             <InputForm
-                ref={emailRef}
-                type='email'
-                label='Email'
-                name='email'
-                placeholder='example@mail.com'
+                ref={usernameRef}
+                type='text'
+                label='Username'
+                name='username'
+                placeholder='john doe'
             />
             <InputForm type='password' label='Password' name='password' placeholder='*****' />
+            {isLoginFailed && <p className='text-center text-red-500 mb-4'>{isLoginFailed}</p>}
             <Button type='submit' className='bg-blue-500 w-full'>
                 Login
             </Button>
