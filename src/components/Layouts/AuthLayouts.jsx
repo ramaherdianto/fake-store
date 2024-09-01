@@ -11,6 +11,12 @@ const AuthLayouts = (props) => {
                 <p className='font-medium text-slate-500 mb-8'>
                     Welcome, Please enter your details
                 </p>
+                <div className='mb-10 bg-slate-200 p-5'>
+                    <h1 className='text-red-500'>Still under development !</h1>
+                    <h1 className='font-bold mt-4'>Account for Login</h1>
+                    <p>username: johnd</p>
+                    <p>password: m38rmF$</p>
+                </div>
                 {children}
                 <p className='mt-5 text-sm text-center'>
                     {type === 'login' ? `Don't have an account?` : 'Have an account?'}{' '}

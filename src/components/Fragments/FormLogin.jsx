@@ -14,14 +14,21 @@ const FormLogin = () => {
             password: event.target.password.value,
         };
 
-        login(data, (status, res) => {
-            if (status) {
-                localStorage.setItem('token', res);
-                window.location.href = '/products';
-            } else {
-                setIsLoginFailed(res);
-            }
-        });
+        if (
+            event.target.username.value.trim() === '' ||
+            event.target.password.value.trim() === ''
+        ) {
+            alert('Please input your username or password!');
+        } else {
+            login(data, (status, res) => {
+                if (status) {
+                    localStorage.setItem('token', res);
+                    window.location.href = '/products';
+                } else {
+                    setIsLoginFailed(res);
+                }
+            });
+        }
     };
 
     useEffect(() => {
