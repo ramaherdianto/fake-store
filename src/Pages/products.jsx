@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import CardProducts from '../components/Fragments/CardProducts';
 import Button from '../components/Elements/Button';
 import { getProducts } from '../services/products.services';
+import { getUsername } from '../services/auth.services';
 
 const ProductsPage = () => {
     const email = localStorage.getItem('email');
@@ -9,6 +10,7 @@ const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [username, setUsername] = useState('');
 
     const handleAddCart = (id) => {
         if (products.length > 0 && cart.find((item) => item.id === id)) {
@@ -20,14 +22,21 @@ const ProductsPage = () => {
 
     const handleLogout = (event) => {
         event.preventDefault();
-        localStorage.removeItem('email');
-        localStorage.removeItem('password');
-        localStorage.removeItem('cart');
+        localStorage.removeItem('token');
         window.location.href = '/login';
     };
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')) || []);
+    }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setUsername(getUsername(token));
+        } else {
+            window.location.href = 'login';
+        }
     }, []);
 
     useEffect(() => {
@@ -61,7 +70,7 @@ const ProductsPage = () => {
     return (
         <>
             <nav className='p-5 bg-blue-500 flex items-center justify-end gap-8'>
-                <h1 className='text-white font-bold'>{email}</h1>
+                <h1 className='text-white font-bold'>{username}</h1>
                 <Button onClick={handleLogout} className='bg-slate-800'>
                     Logout
                 </Button>
