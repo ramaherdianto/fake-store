@@ -4,6 +4,7 @@ import Button from '../components/Elements/Button';
 import { getProducts } from '../services/products.services';
 import { getUsername } from '../services/auth.services';
 import { useLogin } from '../hooks/useLogin';
+import { Navbar } from '../components/Fragments/Navbar';
 
 const ProductsPage = () => {
     const email = localStorage.getItem('email');
@@ -11,7 +12,6 @@ const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    const username = useLogin();
 
     const handleAddCart = (id) => {
         if (products.length > 0 && cart.find((item) => item.id === id)) {
@@ -19,12 +19,6 @@ const ProductsPage = () => {
         } else {
             setCart([...cart, { id, qty: 1 }]);
         }
-    };
-
-    const handleLogout = (event) => {
-        event.preventDefault();
-        localStorage.removeItem('token');
-        window.location.href = '/login';
     };
 
     useEffect(() => {
@@ -61,12 +55,7 @@ const ProductsPage = () => {
 
     return (
         <>
-            <nav className='p-5 bg-blue-500 flex items-center justify-end gap-8'>
-                <h1 className='text-white font-bold'>{username}</h1>
-                <Button onClick={handleLogout} className='bg-slate-800'>
-                    Logout
-                </Button>
-            </nav>
+            <Navbar />
             <section className='flex justify-center py-5'>
                 <div className='w-4/6 flex flex-wrap'>
                     {products.length > 0 &&
