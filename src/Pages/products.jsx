@@ -3,6 +3,7 @@ import CardProducts from '../components/Fragments/CardProducts';
 import Button from '../components/Elements/Button';
 import { getProducts } from '../services/products.services';
 import { getUsername } from '../services/auth.services';
+import { useLogin } from '../hooks/useLogin';
 
 const ProductsPage = () => {
     const email = localStorage.getItem('email');
@@ -10,7 +11,7 @@ const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [username, setUsername] = useState('');
+    const username = useLogin();
 
     const handleAddCart = (id) => {
         if (products.length > 0 && cart.find((item) => item.id === id)) {
@@ -28,15 +29,6 @@ const ProductsPage = () => {
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')) || []);
-    }, []);
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setUsername(getUsername(token));
-        } else {
-            window.location.href = 'login';
-        }
     }, []);
 
     useEffect(() => {
