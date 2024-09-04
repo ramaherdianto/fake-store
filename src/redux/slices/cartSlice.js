@@ -4,6 +4,7 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         data: JSON.parse(localStorage.getItem('cart')) || [],
+        isOpen: false,
     },
     reducers: {
         addToCart(state, action) {
@@ -14,8 +15,11 @@ const cartSlice = createSlice({
                 state.data.push(action.payload);
             }
         },
+        openCart: (state) => {
+            state.isOpen = !state.isOpen;
+        },
     },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, openCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -29,7 +29,7 @@ export const TableCart = (props) => {
     }, [cart]);
 
     return (
-        <table className='text-left table-auto border-separate border-spacing-x-5 mt-5'>
+        <table className='w-full text-left table-auto border-separate border-spacing-x-4 sm:border-spacing-x-5 mt-5'>
             <thead>
                 <tr>
                     <th>Product</th>
