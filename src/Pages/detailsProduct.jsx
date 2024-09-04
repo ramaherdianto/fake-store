@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDetailProduct } from '../services/products.services';
-
 import React from 'react';
-import { Navbar } from '../components/Fragments/Navbar';
+import { MainLayouts } from '../components/Layouts/MainLayouts';
 
 const DetailsProductPage = () => {
     const { id } = useParams();
@@ -15,11 +14,8 @@ const DetailsProductPage = () => {
         });
     }, [id]);
 
-    console.log(product);
-
     return (
-        <>
-            <Navbar />
+        <MainLayouts>
             <div className='w-full py-52 flex items-center justify-center'>
                 {Object.keys(product).length > 0 && (
                     <div className='w-full max-w-xl flex bg-[#f8f8f8] rounded-lg'>
@@ -144,7 +140,7 @@ const DetailsProductPage = () => {
                     </div>
                 )}
             </div>
-        </>
+        </MainLayouts>
     );
 };
 
