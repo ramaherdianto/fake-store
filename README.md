@@ -6,7 +6,7 @@ Simple e-commerce platform featuring API-driven user login, product catalog, sho
 
 ## Tech Stack
 
-**Client:** React + Vite, JWT-Decode, Axios, TailwindCSS
+**Client:** React + Vite, Redux, JWT-Decode, Axios, TailwindCSS
 
 **Server:** Node, Express
 
