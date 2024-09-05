@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '../Elements/Button';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/slices/cartSlice';
+import { DarkMode } from '../../context/darkMode';
 
 const CardProducts = (props) => {
+    const { isDarkMode } = useContext(DarkMode);
     const { children } = props;
 
     return (
-        <article className='w-[250px] max-w-xs bg-slate-100 border border-slate-300 rounded-lg shadow p-4 m-2 flex flex-col justify-between'>
+        <article
+            className={`w-[250px] ${
+                isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-100 border-slate-300'
+            } max-w-xs border rounded-lg shadow p-4 m-2 flex flex-col justify-between`}
+        >
             {children}
         </article>
     );
@@ -30,14 +36,19 @@ const Header = (props) => {
 
 const Body = (props) => {
     const { name, children } = props;
+    const { isDarkMode } = useContext(DarkMode);
 
     return (
         <div className='py-5 h-full'>
             <a href=''>
-                <h2 className='text-sm font-semibold tracking-tight text-slate-800'>
+                <h2
+                    className={`text-sm font-semibold tracking-tight ${
+                        isDarkMode ? 'text-white' : 'text-slate-800'
+                    }`}
+                >
                     {name.length >= 20 ? `${name.substring(0, 20)}...` : name}
                 </h2>
-                <p className='text-xs text-slate-500 mt-2'>
+                <p className={`text-xs mt-2 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                     {children.length >= 45 ? `${children.substring(0, 45)}...` : children}
                 </p>
             </a>
