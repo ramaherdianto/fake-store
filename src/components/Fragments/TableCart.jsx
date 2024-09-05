@@ -1,10 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTotalPrice, useTotalPriceDispatch } from '../../hooks/useTotalPrice';
+import { DarkMode } from '../../context/darkMode';
 
 export const TableCart = (props) => {
     const { products } = props;
     const cart = useSelector((state) => state.cart.data);
-    const [totalPrice, setTotalPrice] = useState(0);
+    const dispatch = useTotalPriceDispatch();
+    const { total } = useTotalPrice();
+    const { isDarkMode } = useContext(DarkMode);
 
     useEffect(() => {
         if (products.length > 0 && cart.length > 0) {
@@ -12,8 +16,12 @@ export const TableCart = (props) => {
                 const product = products.find((product) => product.id === item.id);
                 return acc + product.price * item.qty;
             }, 0);
-
-            setTotalPrice(sum);
+            dispatch({
+                type: 'UPDATE',
+                payload: {
+                    total: sum,
+                },
+            });
             localStorage.setItem('cart', JSON.stringify(cart));
         }
     }, [cart, products]);
@@ -29,7 +37,11 @@ export const TableCart = (props) => {
     }, [cart]);
 
     return (
-        <table className='w-full text-left table-auto border-separate border-spacing-x-4 sm:border-spacing-x-5 mt-5'>
+        <table
+            className={`${
+                isDarkMode ? 'text-white' : ''
+            } w-full text-left table-auto border-separate border-spacing-x-4 sm:border-spacing-x-5 mt-5`}
+        >
             <thead>
                 <tr>
                     <th>Product</th>
@@ -67,13 +79,20 @@ export const TableCart = (props) => {
                             </tr>
                         );
                     })}
+                {cart.length === 0 && (
+                    <tr>
+                        <td colSpan={5} className='text-center py-10 text-slate-600'>
+                            No products available
+                        </td>
+                    </tr>
+                )}
                 <tr ref={totalPriceRef}>
                     <td colSpan={3} className='font-bold'>
                         Total Price
                     </td>
                     <td className='font-bold'>
                         $.{' '}
-                        {totalPrice.toLocaleString('en-EN', {
+                        {total?.toLocaleString('en-EN', {
                             styles: 'currency',
                             currency: 'USD',
                         })}
