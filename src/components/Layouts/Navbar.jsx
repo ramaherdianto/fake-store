@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useContext, useEffect, useState } from 'react';
 import { openCart } from '../../redux/slices/cartSlice';
 import { DarkMode } from '../../context/darkMode';
+import { useTotalPrice } from '../../hooks/useTotalPrice';
 
 export const Navbar = () => {
     const username = useLogin();
