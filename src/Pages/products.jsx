@@ -33,7 +33,7 @@ const ProductsPage = () => {
                     }`}
                 >
                     <div className='max-w-7xl w-full flex justify-center'>
-                        <div className='w-4/6 flex flex-wrap'>
+                        <div className='w-full flex justify-center flex-wrap'>
                             {products.length > 0 &&
                                 products.map((product) => {
                                     return (
@@ -53,19 +53,17 @@ const ProductsPage = () => {
                                     );
                                 })}
                         </div>
-                        {isOpen && (
-                            <>
-                                <div className='w-full sm:w-1/2 lg:w-2/6 fixed top-0 right-0 px-1 py-4 bg-slate-100 min-h-screen'>
-                                    <div className='flex justify-between items-center'>
-                                        <h1 className='text-3xl text-blue-500 font-bold px-5'>
-                                            Cart
-                                        </h1>
-                                        <Button onClick={handleOpenCart}>❌</Button>
-                                    </div>
-                                    <TableCart products={products} />
-                                </div>
-                            </>
-                        )}
+                        <div
+                            className={`${isOpen ? 'translate-x-0' : 'translate-x-[2000px]'} ${
+                                isDarkMode ? 'bg-slate-800' : 'bg-slate-100'
+                            } w-full sm:w-1/2 lg:w-2/6 fixed top-0 right-0 px-1 py-4 min-h-screen rounded-tl-lg rounded-bl-lg shadow-[-12px_0px_42px_3px_rgba(0,0,0,0.35)] transition-all duration-500 ease-in-out`}
+                        >
+                            <div className='flex justify-between items-center'>
+                                <h1 className='text-3xl text-blue-500 font-bold px-5'>Cart</h1>
+                                <Button onClick={handleOpenCart}>❌</Button>
+                            </div>
+                            <TableCart products={products} />
+                        </div>
                     </div>
                 </section>
             </MainLayouts>
